@@ -17,14 +17,8 @@ body {
   font-variant: small-caps;
 }
 
-
-.teaser .hero-body {
-  padding-top: 0;
-  padding-bottom: 3rem;
-}
-
-.teaser {
-  font-family: 'Google Sans', sans-serif;
+.hero-body {
+  padding-bottom: 5px;
 }
 
 
@@ -134,4 +128,28 @@ body {
 }
 
 
+.results-container {
+  display: flex;
+  justify-content: center;
+  gap: 0px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.results-container .item {
+  flex: 1;
+  max-width: 33%;
+}
+
+.results-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.second-subtitle {
+  font-size: 14px;
+  margin-top: 5px;
+}
 

@@ -43,11 +43,19 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { scale: 1.2 }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>  
 </head>
 <body>
 
 
-  <section class="hero">
+<section class="hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
@@ -94,17 +102,6 @@
                       </a>
                     </span>
 
-                    <!-- Supplementary PDF link -->
-                    <!-- <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span> -->
-
                   <!-- Github link -->
                   <span class="link-block">
                     <a href="https://github.com/YOUR REPO HERE" target="_blank"
@@ -134,23 +131,28 @@
   </div>
 </section>
 
-
-<!-- Teaser video-->
-<!-- <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        Your video here
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
+<!-- Trajectory -->
+<div class="columns is-centered results-container">
+  <div class="column is-one-third">
+    <img src="static/images/fig1_2to2/true_traj.gif" alt="First Image">
+    <h2 class="subtitle has-text-centered">
+      Linear Interpolation
+    </h2>
   </div>
-</section> -->
-<!-- End teaser video -->
+  <div class="column is-one-third">
+    <img src="static/images/fig1_2to2/rf_traj.gif" alt="Second Image">
+    <h2 class="subtitle has-text-centered">
+      Rectified Flow (RF)
+    </h2>
+  </div>
+  <div class="column is-one-third">
+    <img src="static/images/fig1_2to2/hrf_traj.gif" alt="Third Image">
+    <h2 class="subtitle has-text-centered">
+      Hierarchical Rectified Flow (HRF)
+    </h2>
+  </div>
+</div>
+
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
@@ -160,8 +162,37 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We formulate a hierarchical rectified flow to model data distributions. It hierarchically couples multiple ordinary differential equations (ODEs) and defines a time-differentiable stochastic process that generates a data distribution from a known source distribution. Each ODE resembles the ODE that is solved in a classic rectified flow, but differs in its domain, i.e., location, velocity, acceleration, etc. Unlike the classic rectified flow formulation, which formulates a single ODE in the location domain and only captures the expected velocity field (sufficient to capture a multi-modal data distribution), the hierarchical rectified flow formulation models the multi-modal random velocity field, acceleration field, etc., in their entirety. This more faithful modeling of the random velocity field enables integration paths to intersect when the underlying ODE is solved during data generation. Intersecting paths in turn lead to integration trajectories that are more straight than those obtained in the classic rectified flow formulation, where integration paths cannot intersect. This leads to modeling of data distributions with fewer neural function evaluations. We empirically verify this on synthetic 1D and 2D data as well as MNIST and CIFAR10 data. We will release our code.
+            We formulate a hierarchical rectified flow to model data distributions. It hierarchically couples multiple ordinary differential equations (ODEs) and defines a time-differentiable stochastic process that generates a data distribution from a known source distribution. Each ODE resembles the ODE that is solved in a classic rectified flow, but differs in its domain, i.e., location, velocity, acceleration, etc. Unlike the classic rectified flow formulation, which formulates a single ODE in the location domain and only captures the expected velocity field (sufficient to capture a multi-modal data distribution), the hierarchical rectified flow formulation models the multi-modal random velocity field, acceleration field, etc., in their entirety. This more faithful modeling of the random velocity field enables integration paths to intersect when the underlying ODE is solved during data generation. Intersecting paths in turn lead to integration trajectories that are more straight than those obtained in the classic rectified flow formulation, where integration paths cannot intersect. This leads to modeling of data distributions with fewer neural function evaluations. We empirically verify this on synthetic 1D and 2D data as well as MNIST and CIFAR10 data. 
           </p>
+          <!-- <p>
+            Rectified Flow (RF)
+            <div class="math-equation">
+              \[
+                d x_t = v(x_t, t) dt
+              \]
+            </div>
+            
+            Hierarchical Rectified Flow with depth 2 (HRF2)
+            <div class="math-equation">
+              \[
+              \begin{cases}
+                 dv_\tau(z_t, t) = a(x_t, t, v_\tau, \tau) d\tau, & \text{with } v_0(z_t, t) \sim \pi_0, \quad \tau \in [0, 1],  \\
+                 dx_t = v_1(x_t, t) dt, & \text{with } x_0 \sim \rho_0, \quad t \in [0, 1].
+              \end{cases}
+              \]
+            </div>            
+            Towards Hierarchical Rectified Flow with higher depth (HRF$D$) 
+            <div class="math-equation">
+              \[
+              \begin{cases}
+                d z_{\boldsymbol{t}}^{(D)}\left(\boldsymbol{z}^{(1:D-1)}_{\boldsymbol{t}}, \boldsymbol{t}^{(1:D-1)}  \right)  = f (\boldsymbol{z}_{\boldsymbol{t}}, \boldsymbol{t}) dt^{(D)}, & \text{with } z_0^{(D)} \sim \boldsymbol{\rho}_0^{(D)},  \\
+                  d z_{\boldsymbol{t}}^{(D-1)} \left(\boldsymbol{z}^{(1:D-2)}_{\boldsymbol{t}}, \boldsymbol{t}^{(1:D-2)}  \right) = z_1^{(D)} \left(\boldsymbol{z}^{(1:D-1)}_{\boldsymbol{t}}, \boldsymbol{t}^{(1:D-1)}  \right) dt^{(D-1)}, & \text{with } z_0^{(D-1)} \sim \boldsymbol{\rho}^{(D-1)}_0,  \\
+                  \quad  \quad \vdots\\
+                d z^{(1)}_{\boldsymbol t} = z_1^{(2)}\left (z^{(1)}_{\boldsymbol t}, t^{(1)} \right)dt^{(1)}, & \text{with } z_0^{(1)} \sim \boldsymbol{\rho}^{(1)}_0.
+              \end{cases}
+              \]
+            </div>     
+          </p> -->
         </div>
       </div>
     </div>
@@ -170,117 +201,148 @@
 <!-- End paper abstract -->
 
 
-<!-- Image carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        Your image here
-        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
-      </div>
-      <div class="item">
-        Your image here
-        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-        Your image here
-        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      Your image here
-      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
-    </div>
+<!-- velocity distribution -->
+<div class="columns is-centered results-container">
+  <div class="column is-one-quarter">
+    <img src="static/images/fig2_v_analy/vdist_samples_-1_0.0.png" alt="Fourth Image">
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig2_v_analy/vdist_samples_0_0.4.png" alt="Fifth Image">
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig2_v_analy/vdist_samples_0.5_0.6.png" alt="Sixth Image">
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig2_v_analy/vdist_samples_1_1.0.png" alt="Seventh Image">
   </div>
 </div>
+<div class="columns is-centered results-container">
+  <div class="column is-one-quarter">
+    <img src="static/images/fig3_v_dist/vdist_hrf_-1_0.0.png" alt="Fourth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      $(x_t,t)=(-1.0,0.0)$
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig3_v_dist/vdist_hrf_0_0.4.png" alt="Fifth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      $(x_t,t)=(0.0,0.4)$
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig3_v_dist/vdist_hrf_0.5_0.6.png" alt="Sixth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      $(x_t,t)=(0.5,0.6)$
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig3_v_dist/vdist_hrf_1_1.0.png" alt="Seventh Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      $(x_t,t)=(1.0,1.0)$
+    </h3>
+  </div>
 </div>
-</section> -->
-<!-- End image carousel -->
 
-
-
-<!-- Youtube video -->
-<!-- <section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      Paper video.
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            Youtube embed code here
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            The above figure shows an example of the velocity distribution at different space-time locations for the source distribution corresponding to a standard Gaussian and the target distribution being a mixture of two Gaussians. In the top row, we validate the theoretically derived velocity distribution by comparing its probability density function (blue) with the empirical sample histogram (orange) at various times $t$ and locations $x_t$. The bottom row demonstrates how our proposed HRF effectively models the velocity distribution. Below are additional experimental results on 1D data, 2D data, MNIST, CIFAR-10, and ImageNet-32. We observe the proposed HRF to achieve compelling results. 
+          </p>
         </div>
       </div>
     </div>
   </div>
-</section> -->
-<!-- End youtube video -->
+</section>
 
-
-<!-- Video carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-            Your video file here
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-            Your video file here
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\
-            Your video file here
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
+<!-- 1d experiment -->
+<div class="columns is-centered results-container">
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/1to2_WD_NFE.png" alt="Fourth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      Metrics
+    </h3>
   </div>
-</section> -->
-<!-- End video carousel -->
-
-
-
-<!-- Paper poster -->
-<!-- <section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
-        
-      </div>
-    </div>
-  </section> -->
-<!--End paper poster -->
-
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/1to2_dist.png" alt="Fifth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      distribution
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/1to2_traj_400.png" alt="Sixth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      RF
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/1to2_traj_20_20.png" alt="Seventh Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      HRF2
+    </h3>
+  </div>
+</div>
+<!-- 2d experiment -->
+<div class="columns is-centered results-container">
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/new_moon_WD_NFE.png" alt="Fourth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      Metrics
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/moon_traj_400.png" alt="Fifth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      RF
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/moon_traj_20_20.png" alt="Sixth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      HRF2
+    </h3>
+  </div>
+  <div class="column is-one-quarter">
+    <img src="static/images/fig4_lowdim/moon_traj_hrf3.png" alt="Seventh Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      HRF3
+    </h3>
+  </div>
+</div>
+<!-- img experiment -->
+<div class="columns is-centered results-container">
+  <div class="column is-one-third">
+    <img src="static/images/fig5_img/mnist_10_50_48.png" alt="Fourth Image">
+  </div>
+  <div class="column is-one-third">
+    <img src="static/images/fig5_img/cifar10_2_250_48.png" alt="Fifth Image">
+  </div>
+  <div class="column is-one-third">
+    <img src="static/images/fig5_img/imagenet_2_250_48.png" alt="Sixth Image">
+  </div>
+</div>
+<div class="columns is-centered results-container">
+  <div class="column is-one-third">
+    <img src="static/images/fig5_img/mnist_fid_v2.png" alt="Fourth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      MNIST
+    </h3>
+  </div>
+  <div class="column is-one-third">
+    <img src="static/images/fig5_img/cifar10_fid_v2.png" alt="Fifth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      CIFAR-10
+    </h3>
+  </div>
+  <div class="column is-one-third">
+    <img src="static/images/fig5_img/imagenet_fid.png" alt="Sixth Image">
+    <h3 class="subtitle second-subtitle has-text-centered">
+      ImageNet-32
+    </h3>
+  </div>
+</div>
 
 <!--BibTex citation -->
   <section class="section" id="BibTeX">
